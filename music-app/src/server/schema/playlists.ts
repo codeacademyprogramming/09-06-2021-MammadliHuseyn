@@ -1,6 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
+import Bcrypt from 'bcrypt';
 
-const songSchema = new Schema({
+const songSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -19,7 +20,7 @@ const songSchema = new Schema({
     }
 })
 
-const playListSchema = new Schema({
+const playListSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -37,5 +38,20 @@ const playListSchema = new Schema({
     }
 })
 
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    playlists: {
+        type: Array
+    }
+})
+
 export const playList = mongoose.model('Playlist', playListSchema);
 export const song = mongoose.model('Song', songSchema);
+export const user = mongoose.model('User', userSchema);

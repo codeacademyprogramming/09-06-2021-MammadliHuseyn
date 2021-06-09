@@ -1,5 +1,6 @@
 import { PlaylistRouter } from "./playlists";
-import {SongRouter} from "./songs";
+import { SongRouter } from "./songs";
+import { AuthRouter } from "./users";
 
 export const ROUTES = [
     {
@@ -9,5 +10,9 @@ export const ROUTES = [
     {
         path: '/songs',
         router: SongRouter
+    },
+    {
+        path: '/auth',
+        router: AuthRouter
     }
 ]

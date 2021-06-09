@@ -12,3 +12,10 @@ export interface IPlaylist {
     author: string;
     songs: Array<ISong>;
 }
+
+export interface IUser {
+    _id?: string;
+    username: string;
+    password: string;
+    playlists?: Array<string>;
+}
