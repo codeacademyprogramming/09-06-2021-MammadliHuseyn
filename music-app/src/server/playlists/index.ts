@@ -17,7 +17,7 @@ PlaylistRouter.post('/create', async (req: Request, res: Response) => {
     res.status(201).json(respPlaylist);
 })
 
-PlaylistRouter.patch('/addsong', async (req: Request, res: Response) => {
+PlaylistRouter.patch('/addToPlist', async (req: Request, res: Response) => {
     const { playlistId, songId } = req.body;
     const song = await songSchema.findById(songId);
     const playlist = await playList.findById(playlistId);
@@ -31,5 +31,5 @@ PlaylistRouter.patch('/addsong', async (req: Request, res: Response) => {
             useFindAndModify: true
         }
     )
-    res.status(202).json(updatedPlaylist);
+    res.status(202).json({ playlistId, songId });
 })

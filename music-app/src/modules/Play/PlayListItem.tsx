@@ -1,15 +1,11 @@
-import axios from 'axios';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { IPlaylist, ISong } from '../../types/types';
 
 
 export const PlayListItem: React.FC<{ plist: IPlaylist }> = ({ plist }) => {
-    const [songs, setSongs] = React.useState<Array<ISong>>([]);
+    const songs = useSelector((state: { playlists: Array<IPlaylist>, songs: Array<ISong> }) => state.songs);
 
-    React.useEffect(() => {
-        axios.get('http://localhost:8080/songs')
-            .then(({ data }) => setSongs(data));
-    }, [songs])
     return (
         <div className="col-4">
             <div className="card">

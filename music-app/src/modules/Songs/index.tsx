@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPlaylists } from '../../store/playlists/actions';
+import { addSongToPlaylist } from '../../store/playlists/actions';
+import { createSong, deleteSong as deleteSongAct, updateSong as updateSongAct } from '../../store/songs/actions';
 import { Playlist } from '../Playlists';
 import { IPlaylist, ISong } from './../../types/types';
 
@@ -17,12 +17,12 @@ export default function CreateSong() {
         songId: ""
     }
 
+    const dispatch = useDispatch();
     const [newSong, setNewSong] = React.useState<ISong>(initialState);
-    const [songs, setSongs] = React.useState<Array<ISong>>([]);
     const [isUpdateMode, setIsUpdateMode] = React.useState<boolean>(false);
     const [songsToPlayList, setSongsToPlayList] = React.useState(songToPlaylistInitial);
-    const playlists = useSelector((state: Array<IPlaylist>) => state);
-    const dispatch = useDispatch();
+    const playlists = useSelector((state: { playlists: Array<IPlaylist>, songs: Array<ISong> }) => state.playlists);
+    const songs = useSelector((state: { playlists: Array<IPlaylist>, songs: Array<ISong> }) => state.songs)
 
     const songChangeHandler = (e: any) => {
         const { name, value } = e.target;
@@ -36,21 +36,18 @@ export default function CreateSong() {
     const addSong = (e: any) => {
         e.preventDefault();
         if (isUpdateMode) {
-            axios.patch(`http://localhost:8080/songs/update/${newSong._id}`, newSong)
-                .then(({ data }) => console.log(data));
+            dispatch(updateSongAct(newSong));
             setIsUpdateMode(false);
         }
         else {
-            axios.post('http://localhost:8080/songs/create', newSong)
-                .then(({ data }) => console.log(data));
+            dispatch(createSong(newSong));
         }
         setNewSong(initialState);
     }
     const deleteSong = (_id: string) => {
         const isConfirm = window.confirm("are you sure to delete?");
         if (isConfirm) {
-            axios.delete(`http://localhost:8080/songs/delete/${_id}`)
-                .then(({ data }) => console.log(data));
+            dispatch(deleteSongAct(_id));
         }
     }
     const updateSong = (song: ISong) => {
@@ -73,15 +70,9 @@ export default function CreateSong() {
     }
     const addSongToPlayList = (e: any) => {
         e.preventDefault();
-        axios.patch('http://localhost:8080/playlists/addsong', songsToPlayList)
-        .then(() => dispatch(getPlaylists()));
+        dispatch(addSongToPlaylist(songsToPlayList));
         setSongsToPlayList(songToPlaylistInitial);
     }
-
-    React.useEffect(() => {
-        axios.get('http://localhost:8080/songs')
-            .then(({ data }) => setSongs(data));
-    }, [songs])
 
     return (
         <div className="container">

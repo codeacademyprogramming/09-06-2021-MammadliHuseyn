@@ -1,0 +1,6 @@
+export enum ACTION_TYPES {
+    GET_SONGS = "GET_SONGS",
+    ADD_SONG = "ADD_SONG",
+    DELETE_SONG = "DELETE_SONG",
+    UPDATE_SONG = "UPDATE_SONG"
+}

@@ -5,11 +5,13 @@ import CreateSong from './modules/Songs';
 import { getPlaylists } from './store/playlists/actions';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Play from './modules/Play';
+import { getSongs } from './store/songs/actions';
 
 function App() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getPlaylists());
+    dispatch(getSongs());
   }, [dispatch]);
   return (
     <Router>
