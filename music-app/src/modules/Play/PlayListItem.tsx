@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IPlaylist, ISong } from '../../types/types';
+import { IPlaylist } from '../../types/types';
+import { ISelector } from '../../types/useSelectorType';
 
 
 export const PlayListItem: React.FC<{ plist: IPlaylist }> = ({ plist }) => {
-    const songs = useSelector((state: { playlists: Array<IPlaylist>, songs: Array<ISong> }) => state.songs);
+    const songs = useSelector((state: ISelector) => state.songs);
 
     return (
         <div className="col-6">
@@ -17,7 +18,7 @@ export const PlayListItem: React.FC<{ plist: IPlaylist }> = ({ plist }) => {
                             return (
                                 <li className="list-group-item" key={sg}>
                                     <p>{song?.artist} - {song?.name}</p>
-                                    <audio className="w-100 btn" controls onPause={(e)=>console.log(e)}>
+                                    <audio className="w-100 btn" controls onPause={(e) => console.log(e)}>
                                         <source src={song?.mediaUrl} />
                                     </audio>
                                 </li>);

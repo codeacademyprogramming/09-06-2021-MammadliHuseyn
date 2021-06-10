@@ -6,6 +6,8 @@ import { getPlaylists } from './store/playlists/actions';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Play from './modules/Play';
 import { getSongs } from './store/songs/actions';
+import { AuthRouter } from './authRoute';
+import { Login } from './modules/Login';
 
 function App() {
   const dispatch = useDispatch();
@@ -16,11 +18,14 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
+        <AuthRouter exact path="/">
           <CreateSong />
-        </Route>
-        <Route exact path="/play">
+        </AuthRouter>
+        <AuthRouter exact path="/play">
           <Play />
+        </AuthRouter>
+        <Route exact path="/login">
+          <Login />
         </Route>
       </Switch>
     </Router>

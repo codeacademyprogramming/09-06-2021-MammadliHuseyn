@@ -2,8 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSongToPlaylist } from '../../store/playlists/actions';
 import { createSong, deleteSong as deleteSongAct, updateSong as updateSongAct } from '../../store/songs/actions';
+import { ISelector } from '../../types/useSelectorType';
 import { Playlist } from '../Playlists';
-import { IPlaylist, ISong } from './../../types/types';
+import { ISong } from './../../types/types';
 
 export default function CreateSong() {
     const initialState: ISong = {
@@ -21,8 +22,8 @@ export default function CreateSong() {
     const [newSong, setNewSong] = React.useState<ISong>(initialState);
     const [isUpdateMode, setIsUpdateMode] = React.useState<boolean>(false);
     const [songsToPlayList, setSongsToPlayList] = React.useState(songToPlaylistInitial);
-    const playlists = useSelector((state: { playlists: Array<IPlaylist>, songs: Array<ISong> }) => state.playlists);
-    const songs = useSelector((state: { playlists: Array<IPlaylist>, songs: Array<ISong> }) => state.songs)
+    const playlists = useSelector((state: ISelector) => state.playlists);
+    const songs = useSelector((state: ISelector) => state.songs)
 
     const songChangeHandler = (e: any) => {
         const { name, value } = e.target;
