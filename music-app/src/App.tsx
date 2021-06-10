@@ -8,6 +8,7 @@ import Play from './modules/Play';
 import { getSongs } from './store/songs/actions';
 import { AuthRouter } from './authRoute';
 import { Login } from './modules/Login';
+import { Register } from './modules/Register';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,9 @@ function App() {
         </AuthRouter>
         <Route exact path="/login">
           <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
         </Route>
       </Switch>
     </Router>

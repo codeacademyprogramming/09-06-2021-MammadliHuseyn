@@ -25,7 +25,8 @@ AuthRouter.post("/login", async (req: Request, res: Response) => {
         if (!Bcrypt.compareSync(req.body.password, user.password)) {
             return res.status(400).send({ message: "The password is invalid" });
         }
-        res.send(user._id);
+        user.password = '';
+        res.json(user);
     } catch (error) {
         res.status(500).send(error);
     }
