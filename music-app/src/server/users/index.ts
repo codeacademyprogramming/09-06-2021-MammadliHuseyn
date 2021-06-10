@@ -20,14 +20,14 @@ AuthRouter.post("/login", async (req: Request, res: Response) => {
     try {
         const user: IUser = await userSchema.findOne({ username: req.body.username }).exec();
         if (!user) {
-            return res.status(400).send({ message: "The username does not exist" });
+            return res.status(400).json({ message: "Username or password is invalid!" });
         }
         if (!Bcrypt.compareSync(req.body.password, user.password)) {
-            return res.status(400).send({ message: "The password is invalid" });
+            return res.status(400).json({ message: "Username or password is invalid!" });
         }
         user.password = '';
         res.json(user);
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).json({error});
     }
 });
